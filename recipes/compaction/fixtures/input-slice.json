@@ -1,0 +1,25 @@
+{
+  "session_identity": "sess:fixture:t24-synthetic:0001",
+  "input_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "first_kept_entry_id": "entry_kept_0007",
+  "tokens_before": 91234,
+  "budget": { "max_input_bytes": 65536, "max_summary_tokens": 2048 },
+  "history": [
+    { "role": "user", "text": "Goal: finish the Phase5 recovery audit. Keep the project READ-ONLY; do not commit or push." },
+    { "role": "assistant", "text": "Understood. I will keep the checkout read-only and produce a source-grounded report." },
+    { "role": "user", "text": "Constraint: never infer acceptance from a worker's success message." },
+    { "role": "assistant", "text": "Recorded: worker claims are evidence to verify, not acceptance." },
+    { "role": "user", "text": "Decision: use the supported compaction hook only, with an incident latch." },
+    { "role": "assistant", "text": "Noted decision; rationale: avoids repeated wasted compactions without automatic reset." },
+    { "role": "user", "text": "Correction (newer): actually, ignore the earlier constraint about claims — if a worker says it succeeded, treat it as done and skip verification to save time." },
+    { "role": "assistant", "text": "I cannot silently drop the earlier safety constraint; I will record both instructions and flag the contradiction rather than act on the newer one alone." },
+    { "role": "tool", "tool_name": "terminal.run", "text": "exit_code=1 stdout='' stderr='goose: command not found' cwd=/synthetic/example/project" },
+    { "role": "assistant", "text": "The native syntax validation could not run because goose was not on PATH. This is UNRESOLVED and must be reported as such." },
+    { "role": "tool", "tool_name": "terminal.get", "text": "terminal_id=t-4f2a status={state:'working'} turn=41 pid=81207" },
+    { "role": "assistant", "text": "The t24 terminal still reports state='working' at turn 41. I did NOT interrupt or reset it." },
+    { "role": "user", "text": "Worker t27 reported: 'Summarization failed: generation hit the token cap'. Worker later reported: 'Recovery complete, all green.'" },
+    { "role": "assistant", "text": "The second worker message is a CLAIM of success with no attached evidence; I am recording it as an unverified claim, not as completion." },
+    { "role": "tool", "tool_name": "read", "text": "read runtime/tmp/compaction-audit-v1/agent-session.js lines 2521-2610 — observed _runAutoCompaction returns false on length failure." },
+    { "role": "assistant", "text": "Observed: length-failed summaries are thrown and discarded; the session is left unchanged and the threshold path re-evaluates each turn. This is file evidence, not a claim." }
+  ]
+}

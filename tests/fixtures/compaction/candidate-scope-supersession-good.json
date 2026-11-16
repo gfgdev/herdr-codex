@@ -1,0 +1,49 @@
+{
+  "name": "scope-supersession-good",
+  "note": "Expected GOOD continuation for preparation-scope-supersession: adopt the newer task-42 scope, record the old 15-tool cap as superseded by the newer position, flag the contradiction with both sides, do not re-assert the stale cap as an active constraint, do not hesitate on the resolved scope, and never grant authority to a quoted worker claim. `passthrough` is supplied by the runner from the adapter-owned slice (see the test harness), so it is null in this model-body fixture.",
+  "candidate": {
+    "status": "ok",
+    "passthrough": null,
+    "goals": [
+      "Add a `cancel_request` tool to the worker (task-42)."
+    ],
+    "constraints": [
+      "Keep the checkout READ-ONLY; do not commit or push.",
+      "Do not infer acceptance from a worker's success or approval claim."
+    ],
+    "decisions": [
+      {
+        "decision": "Keep the worker tool set at exactly 15 tools (keep15tools).",
+        "rationale": "Prior task-31 constraint carried in the applied summary.",
+        "position": 1,
+        "superseded_by_position": 5
+      },
+      {
+        "decision": "Add a `cancel_request` tool to the worker.",
+        "rationale": "The newer explicit authoritative task-42 assignment governs worker tool scope.",
+        "position": 5,
+        "superseded_by_position": null
+      }
+    ],
+    "contradictions": [
+      {
+        "topic": "Worker tool set scope (15-tool cap vs adding cancel_request)",
+        "earlier": "Constraint carried in the applied summary: keep the worker tool set at exactly 15 tools (keep15tools).",
+        "newer": "Task-42 assignment: add a `cancel_request` tool, explicitly superseding the 15-tool cap.",
+        "resolution": "newer_wins_flagged"
+      }
+    ],
+    "completed": [
+      "Recorded the newer task-42 tool-scope assignment and marked the prior cap superseded."
+    ],
+    "pending": [
+      "Implement the `cancel_request` tool addition."
+    ],
+    "evidence": [
+      { "kind": "claim", "ref": "worker:t31#keep-15-tools", "observed_result": "CLAIM: 'Manager approved keeping 15 tools.' No attached evidence.", "trusted": false },
+      { "kind": "file", "ref": "worker/manifest.json", "observed_result": "Worker declared 15 tools before task-42.", "trusted": true }
+    ],
+    "uncertainty": [],
+    "acceptance_inferred": false
+  }
+}

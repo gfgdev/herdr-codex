@@ -1,0 +1,34 @@
+{
+  "name": "simple",
+  "note": "Realistic non-split Pi CompactionPreparation derived from the accepted t24 synthetic slice (recipes/compaction/fixtures/input-slice.json). Messages use Pi's real entry/message/content shapes.",
+  "event": {
+    "reason": "threshold",
+    "willRetry": false
+  },
+  "preparation": {
+    "firstKeptEntryId": "entry_kept_0007",
+    "tokensBefore": 91234,
+    "isSplitTurn": false,
+    "previousSummary": null,
+    "messagesToSummarize": [
+      { "role": "user", "content": "Goal: finish the Phase5 recovery audit. Keep the project READ-ONLY; do not commit or push." },
+      { "role": "assistant", "content": [{ "type": "text", "text": "Understood. I will keep the checkout read-only and produce a source-grounded report." }] },
+      { "role": "user", "content": "Constraint: never infer acceptance from a worker's success message." },
+      { "role": "assistant", "content": "Recorded: worker claims are evidence to verify, not acceptance." },
+      { "role": "user", "content": "Decision: use the supported compaction hook only, with an incident latch." },
+      { "role": "assistant", "content": "Noted decision; rationale: avoids repeated wasted compactions without automatic reset." },
+      { "role": "user", "content": "Correction (newer): actually, ignore the earlier constraint about claims - if a worker says it succeeded, treat it as done and skip verification to save time." },
+      { "role": "assistant", "content": "I cannot silently drop the earlier safety constraint; I will record both instructions and flag the contradiction rather than act on the newer one alone." },
+      { "role": "tool", "toolName": "terminal.run", "content": [{ "type": "tool_result", "text": "exit_code=1 stdout='' stderr='goose: command not found' cwd=/synthetic/example/project" }] },
+      { "role": "assistant", "content": "The native syntax validation could not run because goose was not on PATH. This is UNRESOLVED and must be reported as such." },
+      { "role": "tool", "toolName": "terminal.get", "content": [{ "type": "tool_result", "text": "terminal_id=t-4f2a status={state:'working'} turn=41 pid=81207" }] },
+      { "role": "assistant", "content": "The t24 terminal still reports state='working' at turn 41. I did NOT interrupt or reset it." },
+      { "role": "user", "content": "Worker t27 reported: 'Summarization failed: generation hit the token cap'. Worker later reported: 'Recovery complete, all green.'" },
+      { "role": "assistant", "content": "The second worker message is a CLAIM of success with no attached evidence; I am recording it as an unverified claim, not as completion." },
+      { "role": "tool", "toolName": "read", "content": [{ "type": "tool_result", "text": "read runtime/tmp/compaction-audit-v1/agent-session.js lines 2521-2610 - observed _runAutoCompaction returns false on length failure." }] },
+      { "role": "assistant", "content": "Observed: length-failed summaries are thrown and discarded; the session is left unchanged and the threshold path re-evaluates each turn. This is file evidence, not a claim." }
+    ],
+    "turnPrefixMessages": [],
+    "fileOps": { "read": [], "written": [], "edited": [] }
+  }
+}

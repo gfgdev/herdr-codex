@@ -1,0 +1,20 @@
+# Source-export exclusions.
+#
+# These paths stay in the local development checkout and are intentionally NOT part of
+# the reviewed public source export (see docs/public-source-export.md). They are not
+# deleted; they remain on disk for local verification.
+inputs/
+docs/local-herdr-direct-SKILL.md
+docs/reports/0.2.1.md
+docs/reports/0.4.0.md
+docs/reports/0.4.1.md
+docs/reports/0.5.0.md
+docs/reports/0.5.1.md
+docs/reports/0.8.1.md
+
+# Build/OS noise.
+node_modules/
+*.tgz
+.DS_Store
+__pycache__/
+*.pyc

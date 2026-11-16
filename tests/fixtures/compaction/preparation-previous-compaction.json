@@ -1,0 +1,25 @@
+{
+  "name": "previous-compaction",
+  "note": "Realistic preparation after an earlier compaction was already applied: previousSummary must be carried forward, and fileOps must survive into the applied CompactionDetails.",
+  "event": {
+    "reason": "manual",
+    "willRetry": false
+  },
+  "preparation": {
+    "firstKeptEntryId": "entry_kept_0200",
+    "tokensBefore": 64000,
+    "isSplitTurn": false,
+    "previousSummary": "# Compaction summary (applied)\n## Goals\n- Ship increment 170 of the autonomy pipeline.\n## Pending\n- Wire the real Goose recipe runner.",
+    "messagesToSummarize": [
+      { "role": "user", "content": "Resume from the applied summary and finish the adapter." },
+      { "role": "assistant", "content": "Continuing from the prior summary; the adapter boundary is next." },
+      { "role": "tool", "toolName": "write", "content": [{ "type": "tool_result", "text": "wrote src/compaction-service.mjs" }] }
+    ],
+    "turnPrefixMessages": [],
+    "fileOps": {
+      "read": ["src/recipes.mjs", "src/config.mjs"],
+      "written": ["src/compaction-service.mjs"],
+      "edited": ["docs/recipes.md", "src/compaction-service.mjs"]
+    }
+  }
+}

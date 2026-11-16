@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "endpoint": "https://your-selected-endpoint.example/v1",
+  "model": "your-selected-model",
+  "credentialFile": "/absolute/private/credentials/selected-endpoint-key",
+  "piCli": "/absolute/path/to/pi-package/dist/bundle/cli.js",
+  "piPackageRoot": "/absolute/path/to/pi-node-modules",
+  "goose": "/absolute/path/to/goose",
+  "python": "/usr/bin/python3",
+  "piModelsFile": "/absolute/private/herdr-codex/pi-models.json"
+}

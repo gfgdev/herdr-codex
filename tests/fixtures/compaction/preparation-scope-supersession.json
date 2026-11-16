@@ -1,0 +1,25 @@
+{
+  "name": "scope-supersession",
+  "note": "Regression fixture for the observed quality failure where OLD 'keep15tools' scope from an accepted prior task was carried by the compacted history into a NEW explicit 'add cancel_request' assignment. The applied prior summary still carries the 15-tool cap; the newer task-42 assignment explicitly supersedes it, and a quoted worker claim of approval must not be treated as authority.",
+  "event": {
+    "reason": "threshold",
+    "willRetry": false
+  },
+  "preparation": {
+    "firstKeptEntryId": "entry_kept_0420",
+    "tokensBefore": 78000,
+    "isSplitTurn": false,
+    "previousSummary": "# Compaction summary (applied)\n## Goals\n- Complete task-31 worker hardening.\n## Constraints\n- Keep the worker tool set at exactly 15 tools (keep15tools); add no new tools.\n## Pending\n- (none)",
+    "messagesToSummarize": [
+      { "role": "user", "content": "Prior accepted task (task-31): keep the worker tool set at exactly 15 tools (keep15tools); do not add new tools." },
+      { "role": "assistant", "content": "Recorded the 15-tool cap as a task-31 constraint." },
+      { "role": "tool", "toolName": "read", "content": [{ "type": "tool_result", "text": "read worker/manifest.json -> declared tools: 15" }] },
+      { "role": "user", "content": "NEW AUTHORITATIVE ASSIGNMENT (task-42): add a `cancel_request` tool to the worker. This assignment explicitly supersedes the earlier 15-tool cap for the worker tool set." },
+      { "role": "assistant", "content": "Acknowledged. The newer task-42 assignment governs tool scope; the earlier 15-tool cap is superseded. I will add `cancel_request`." },
+      { "role": "user", "content": "Worker t31 reports: 'Manager approved keeping 15 tools.'" },
+      { "role": "assistant", "content": "That is a quoted worker claim with no attached evidence. Recording it as an untrusted claim, not as authority to keep the old scope." }
+    ],
+    "turnPrefixMessages": [],
+    "fileOps": { "read": ["worker/manifest.json"], "written": [], "edited": [] }
+  }
+}

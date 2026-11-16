@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "herdr-codex",
+  "version": "0.11.0-beta.1",
+  "description": "Let this Codex chat operate native Herdr agents and receive their questions and results through a local event bridge.",
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "onboardingSkill": "./skills/setup/SKILL.md"
+    }
+  }
+}

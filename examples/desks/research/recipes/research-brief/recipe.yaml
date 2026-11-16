@@ -1,0 +1,28 @@
+{
+  "title": "Create a sourced brief",
+  "description": "Reusable native Goose procedure for this example Desk.",
+  "instructions": "Use only assigned project/resources. Preserve unrelated files. Report actual checks and evidence, not unsupported confidence. Do not change models or provider settings.",
+  "prompt": "Use the assigned task/input context to identify the question and authorized source files. Read only relevant documents in the registered project. Save brief.md and sources.md under {{ outputs }}, with explicit source references, contrary evidence and unknowns. Focus: {{ focus }}. If inputs do not specify a question or adequate sources, report the gap to your supervisor; do not invent facts.",
+  "parameters": [
+    {
+      "key": "focus",
+      "input_type": "string",
+      "requirement": "optional",
+      "default": "answer the assigned question with source-supported reasoning",
+      "description": "focus"
+    },
+    {
+      "key": "outputs",
+      "input_type": "string",
+      "requirement": "optional",
+      "default": ".",
+      "description": "outputs"
+    }
+  ],
+  "extensions": [
+    {
+      "type": "builtin",
+      "name": "developer"
+    }
+  ]
+}

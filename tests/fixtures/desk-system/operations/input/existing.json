@@ -1,0 +1,4 @@
+[
+  {"poId":"PO-101","revision":1,"vendor":"Acorn Supply","amountCents":10000,"currency":"USD","sourceId":"old-101"},
+  {"poId":"PO-102","revision":2,"vendor":"Blue Harbor","amountCents":20000,"currency":"USD","sourceId":"old-102"}
+]

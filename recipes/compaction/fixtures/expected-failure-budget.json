@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "code": "budget_exceeded",
+  "detail": "Input slice is 131072 bytes, exceeding budget.max_input_bytes=65536. Refusing rather than summarizing a truncated/oversized input. Adapter should re-select a smaller bounded slice.",
+  "passthrough": {
+    "session_identity": "sess:fixture:t24-synthetic-oversize:0002",
+    "input_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "first_kept_entry_id": "entry_kept_0009",
+    "tokens_before": 220001
+  }
+}

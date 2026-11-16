@@ -1,0 +1,24 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,realpathSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {Store} from '../src/store.mjs';
+import {Desks} from '../src/desks.mjs';
+import {WorkflowRuns} from '../src/desk-runs.mjs';
+import {digest} from '../src/config.mjs';
+for(const substantive of [false,true])test(`recipe native completion ${substantive?'keeps one substantive result':'supplies one forgotten-report fallback'} despite informational exit metadata`,async t=>{
+ const dir=realpathSync(mkdtempSync(join(tmpdir(),'recipe-notification-')));t.after(()=>rmSync(dir,{recursive:true,force:true}));const config={stateDir:dir},store=new Store(join(dir,'store.sqlite'));t.after(()=>store.close());const desks=new Desks({store,config});const desk=desks.create({id:'desk',name:'Recipe',purpose:'Notification regression'});
+ const worker={version:1,id:'worker',name:'Recipe',taskId:'task',role:'goose',project:desk.home,stateDir:join(dir,'worker'),terminalId:'t1',deskId:'desk',deskProjectId:'home',deskRunId:'run',deskStepId:'deliver',executionKind:'recipe',executionReceiptVersion:1,recipe:{sha256:'source'},recipeParameters:{},launchResult:{pid:123},writePaths:[]};
+ store.saveTask({id:'task',threadId:'00000000-0000-4000-8000-000000000001',status:'active',name:'Recipe',project:desk.home,deskId:'desk',deskProjectId:'home',deskRunId:'run',deskStepId:'deliver'});store.saveWorker(worker);
+ const engine=new WorkflowRuns({store,config,rpc:{request:()=>{throw new Error('No new worker may be launched');}}});engine.pulse=async()=>{};
+ engine.save({version:1,id:'run',deskId:'desk',status:'running',steps:{deliver:{id:'deliver',workerId:worker.id,status:'running'}}});
+ mkdirSync(join(worker.stateDir,'execution'),{recursive:true});writeFileSync(join(worker.stateDir,'execution/recipe-result.json'),JSON.stringify({version:1,workerId:worker.id,taskId:worker.taskId,terminalId:worker.terminalId,pid:123,recipeSha256:'source',parametersSha256:digest('{}'),exit:{code:0,signal:null},logs:{}}));
+ worker.delegation={spec:{deskWorkspace:{outputs:join(dir,'outputs'),evidence:join(dir,'evidence')}}};store.saveWorker(worker);
+ const message=(id,kind)=>({id,kind,workerId:worker.id,taskId:worker.taskId,terminalId:worker.terminalId,text:'Verified native execution metadata',createdAt:new Date().toISOString()});
+ store.ingest(worker,message('execution-metadata','progress'));if(substantive)store.ingest(worker,message('substantive-report','result'));
+ const native={address:'t1',state:'finished',cwd:worker.project,exit_code:0,labels:{'codex.worker':'worker','codex.task':'task','codex.desk':'desk','codex.desk-project':'home'}};
+ assert.equal(await engine.workerFinished(worker,native),true);assert.equal(await engine.workerFinished(worker,native),true);
+ const results=store.messages({taskId:'task'}).filter(m=>m.kind==='result');assert.equal(results.length,1);assert.equal(store.messages({taskId:'task',pending:true}).length,1);assert.equal(store.message('execution-metadata').delivery,'informational');
+ if(substantive)assert.equal(results[0].id,'substantive-report');else assert.match(results[0].id,/^execution-/);
+});

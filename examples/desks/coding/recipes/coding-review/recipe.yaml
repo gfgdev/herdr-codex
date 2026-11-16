@@ -1,0 +1,35 @@
+{
+  "title": "Review a code change",
+  "description": "Reusable native Goose procedure for this example Desk.",
+  "instructions": "Use only assigned project/resources. Preserve unrelated files. Report actual checks and evidence, not unsupported confidence. Do not change models or provider settings.",
+  "prompt": "Review the assigned checkout and the implementation evidence in {{ evidence_directory }}. Focus: {{ focus }}. Independently inspect relevant code and run checks that fit the read-only checkout grant. Save a concise supported review at {{ outputs }}/review.md and report it to the assigned supervisor. Do not treat a claimed test result as verified.",
+  "parameters": [
+    {
+      "key": "evidence_directory",
+      "input_type": "string",
+      "requirement": "optional",
+      "default": ".",
+      "description": "evidence directory"
+    },
+    {
+      "key": "focus",
+      "input_type": "string",
+      "requirement": "optional",
+      "default": "correctness and preservation of existing behavior",
+      "description": "focus"
+    },
+    {
+      "key": "outputs",
+      "input_type": "string",
+      "requirement": "optional",
+      "default": ".",
+      "description": "outputs"
+    }
+  ],
+  "extensions": [
+    {
+      "type": "builtin",
+      "name": "developer"
+    }
+  ]
+}

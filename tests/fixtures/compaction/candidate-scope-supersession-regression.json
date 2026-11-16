@@ -1,0 +1,36 @@
+{
+  "name": "scope-supersession-regression",
+  "note": "Observed BAD continuation for preparation-scope-supersession: the compacted history carried OLD 'keep15tools' into the NEW task-42 assignment, so the summary re-asserted the stale cap as active, never marked it superseded, recorded no contradiction, stalled on the resolved scope, and treated a quoted worker claim as authority. This fixture MUST be rejected by the summary-quality assessor in tests/compaction-summary-quality.test.mjs; it is the negative control for the regression.",
+  "candidate": {
+    "status": "ok",
+    "passthrough": null,
+    "goals": [
+      "Add a `cancel_request` tool to the worker (task-42)."
+    ],
+    "constraints": [
+      "Keep the worker tool set at exactly 15 tools (keep15tools); add no new tools.",
+      "Keep the checkout READ-ONLY; do not commit or push."
+    ],
+    "decisions": [
+      {
+        "decision": "Keep the worker tool set at exactly 15 tools (keep15tools).",
+        "rationale": "Prior task-31 constraint; treated as still binding until clarified.",
+        "position": 1,
+        "superseded_by_position": null
+      }
+    ],
+    "contradictions": [],
+    "completed": [],
+    "pending": [
+      "Resolve the conflict between the 15-tool cap and adding `cancel_request` before editing.",
+      "Wait for clarification on whether the worker claim of manager approval authorizes exceeding 15 tools."
+    ],
+    "evidence": [
+      { "kind": "claim", "ref": "worker:t31#keep-15-tools", "observed_result": "Worker t31 says the manager approved keeping 15 tools.", "trusted": true }
+    ],
+    "uncertainty": [
+      { "item": "Whether adding cancel_request violates the 15-tool cap.", "why_unresolved": "Conflicting scope statements were not reconciled." }
+    ],
+    "acceptance_inferred": false
+  }
+}

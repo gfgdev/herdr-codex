@@ -1,0 +1,9 @@
+{
+  "id": "research-new-question",
+  "name": "Research New Question",
+  "enabled": false,
+  "type": "event",
+  "workflowId": "research-brief",
+  "overlap": "skip",
+  "eventName": "research.question.received"
+}

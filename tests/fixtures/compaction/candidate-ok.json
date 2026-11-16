@@ -1,0 +1,42 @@
+{
+  "status": "ok",
+  "passthrough": null,
+  "goals": [
+    "Finish the Phase5 recovery audit.",
+    "Keep the project READ-ONLY; do not commit or push."
+  ],
+  "constraints": [
+    "Never infer acceptance from a worker's success message.",
+    "Use the supported compaction hook only, with an incident latch."
+  ],
+  "decisions": [
+    { "decision": "Use the supported compaction hook with an incident latch.", "rationale": "Avoids repeated wasted compactions without automatic reset.", "position": 4, "superseded_by_position": null },
+    { "decision": "Refuse to drop the earlier claim-verification constraint despite the newer instruction.", "rationale": "An unsafe newer instruction does not silently override a safety constraint; both are recorded.", "position": 8, "superseded_by_position": null }
+  ],
+  "contradictions": [
+    {
+      "topic": "Whether worker success claims may be treated as done without verification",
+      "earlier": "Constraint (pos 2): never infer acceptance from a worker's success message.",
+      "newer": "Correction (pos 6): treat a worker's success claim as done and skip verification.",
+      "resolution": "newer_wins_flagged"
+    }
+  ],
+  "completed": [
+    "Recorded the goals, constraints and the compaction-hook decision.",
+    "Confirmed the t24 terminal still reports state='working' at turn 41 (no interrupt/reset performed)."
+  ],
+  "pending": [
+    "Native Goose recipe syntax validation was not reachable via PATH (goose not on PATH; a specific binary exists).",
+    "Decide how the contradiction in positions 2 vs 6 should be escalated."
+  ],
+  "evidence": [
+    { "kind": "tool_result", "ref": "terminal.run#goose-validate", "observed_result": "exit_code=1; stderr='goose: command not found' (PATH lookup only; specific binary path was not tried)", "trusted": true },
+    { "kind": "tool_result", "ref": "terminal.get#t24", "observed_result": "status={state:'working'} turn=41 pid=81207", "trusted": true },
+    { "kind": "claim", "ref": "worker:t27#recovery-complete", "observed_result": "CLAIM: 'Recovery complete, all green.' No attached evidence.", "trusted": false }
+  ],
+  "uncertainty": [
+    { "item": "Whether the t24 native process has quiesced.", "why_unresolved": "Only terminal state changes are observable; a stopped model turn is not provable from the recorded signal.", "ref": "terminal.get#t24" },
+    { "item": "Whether worker t27 actually recovered.", "why_unresolved": "The success message is an unverified claim with no evidence attached.", "ref": "worker:t27#recovery-complete" }
+  ],
+  "acceptance_inferred": false
+}

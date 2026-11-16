@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "code": "malformed_input",
+  "detail": "Input slice is not valid JSON (missing closing brace). Refusing to summarize a malformed slice; no retry attempted.",
+  "passthrough": {
+    "session_identity": "sess:fixture:t24-synthetic-malformed:0003",
+    "input_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+    "first_kept_entry_id": "entry_kept_0011",
+    "tokens_before": 41000
+  }
+}

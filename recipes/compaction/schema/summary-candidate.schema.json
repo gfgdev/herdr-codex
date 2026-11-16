@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Compaction summary candidate (adapter-validated)",
+  "description": "Structured summary CANDIDATE produced by the bounded compaction recipe. A separate adapter validates and decides whether to apply it; this object is never self-applied.",
+  "oneOf": [
+    { "$ref": "#/definitions/success" },
+    { "$ref": "#/definitions/failure" }
+  ],
+  "definitions": {
+    "passthrough": {
+      "type": "object",
+      "description": "Adapter-owned values echoed verbatim. The model MUST NOT compute or alter these.",
+      "required": ["session_identity", "input_digest", "first_kept_entry_id", "tokens_before"],
+      "additionalProperties": false,
+      "properties": {
+        "session_identity": { "type": "string" },
+        "input_digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "first_kept_entry_id": { "type": "string" },
+        "tokens_before": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["kind", "ref", "observed_result"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["file", "test", "command", "tool_result", "claim"] },
+        "ref": { "type": "string" },
+        "observed_result": { "type": "string" },
+        "trusted": { "type": "boolean" }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["decision", "rationale", "position"],
+      "additionalProperties": false,
+      "properties": {
+        "decision": { "type": "string" },
+        "rationale": { "type": "string" },
+        "position": { "type": "integer", "minimum": 0 },
+        "superseded_by_position": { "type": ["integer", "null"] }
+      }
+    },
+    "contradiction": {
+      "type": "object",
+      "required": ["topic", "earlier", "newer", "resolution"],
+      "additionalProperties": false,
+      "properties": {
+        "topic": { "type": "string" },
+        "earlier": { "type": "string" },
+        "newer": { "type": "string" },
+        "resolution": { "enum": ["newer_wins_flagged", "unresolved", "escalate"] }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "required": ["item", "why_unresolved"],
+      "additionalProperties": false,
+      "properties": {
+        "item": { "type": "string" },
+        "why_unresolved": { "type": "string" },
+        "ref": { "type": "string" }
+      }
+    },
+    "success": {
+      "type": "object",
+      "required": ["status", "passthrough", "goals", "constraints", "decisions", "completed", "pending", "evidence", "uncertainty", "acceptance_inferred"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "const": "ok" },
+        "passthrough": { "$ref": "#/definitions/passthrough" },
+        "goals": { "type": "array", "items": { "type": "string" } },
+        "constraints": { "type": "array", "items": { "type": "string" } },
+        "decisions": { "type": "array", "items": { "$ref": "#/definitions/decision" } },
+        "contradictions": { "type": "array", "items": { "$ref": "#/definitions/contradiction" } },
+        "completed": { "type": "array", "items": { "type": "string" } },
+        "pending": { "type": "array", "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "$ref": "#/definitions/evidence" } },
+        "uncertainty": { "type": "array", "items": { "$ref": "#/definitions/unknown" } },
+        "acceptance_inferred": { "const": false }
+      }
+    },
+    "failure": {
+      "type": "object",
+      "required": ["status", "code", "detail", "passthrough"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "const": "failed" },
+        "code": { "enum": ["budget_exceeded", "malformed_input", "ambiguous_unsafe", "internal_error"] },
+        "detail": { "type": "string" },
+        "passthrough": { "$ref": "#/definitions/passthrough" }
+      }
+    }
+  }
+}

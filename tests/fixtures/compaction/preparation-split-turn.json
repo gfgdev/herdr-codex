@@ -1,0 +1,25 @@
+{
+  "name": "split-turn",
+  "note": "Realistic split-turn preparation: Pi cuts inside an assistant turn, so turnPrefixMessages holds the partially-summarized turn prefix and must be summarized together with messagesToSummarize.",
+  "event": {
+    "reason": "overflow",
+    "willRetry": true
+  },
+  "preparation": {
+    "firstKeptEntryId": "entry_kept_0104",
+    "tokensBefore": 150221,
+    "isSplitTurn": true,
+    "previousSummary": null,
+    "messagesToSummarize": [
+      { "role": "user", "content": "Continue the migration audit and record every file you touch." },
+      { "role": "assistant", "content": "Starting the migration audit." },
+      { "role": "tool", "toolName": "terminal.run", "content": [{ "type": "tool_result", "text": "exit_code=0; migrated 3 tables" }] }
+    ],
+    "turnPrefixMessages": [
+      { "role": "user", "content": "Now verify the migrated tables and do not restart the worker." },
+      { "role": "assistant", "content": [{ "type": "text", "text": "Verifying tables (turn prefix, cut mid-turn)." }] },
+      { "role": "tool", "toolName": "read", "content": [{ "type": "tool_result", "text": "read db/migrations/0003.sql" }] }
+    ],
+    "fileOps": { "read": ["db/migrations/0003.sql"], "written": [], "edited": [] }
+  }
+}

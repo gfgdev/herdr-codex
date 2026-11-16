@@ -1,0 +1,10 @@
+{
+  "id": "operations-daily",
+  "name": "Operations Daily",
+  "enabled": false,
+  "type": "interval",
+  "workflowId": "operations-batch",
+  "overlap": "skip",
+  "everySeconds": 86400,
+  "catchup": "latest"
+}

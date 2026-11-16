@@ -1,0 +1,19 @@
+{
+  "name": "herdr-codex",
+  "version": "0.11.0-beta.1",
+  "private": true,
+  "type": "module",
+  "description": "Codex operates native Herdr agents with event-driven return messages",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "bin": {
+    "herdr-codex": "src/cli.mjs",
+    "herdr-message": "src/message-cli.mjs",
+    "herdr-agents": "src/agent-mcp.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  }
+}

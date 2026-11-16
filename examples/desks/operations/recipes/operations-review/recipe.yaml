@@ -1,0 +1,28 @@
+{
+  "title": "Review a proposed record batch",
+  "description": "Reusable native Goose procedure for this example Desk.",
+  "instructions": "Use only assigned project/resources. Preserve unrelated files. Report actual checks and evidence, not unsupported confidence. Recompute narrative counts and totals from individual records in the final artifacts; do not count grouped bullet points. Compare prose with structured data and distinguish all incoming records from the accepted subset. Do not change models or provider settings.",
+  "prompt": "Inspect source records in the registered project and proposed outputs at {{ proposed_directory }}. Use the explicit task rules from context. Check required fields, transformations, duplicate handling and unresolved discrepancies. Write review.md under {{ outputs }}. Report supported defects to the supervisor; do not update external systems.",
+  "parameters": [
+    {
+      "key": "proposed_directory",
+      "input_type": "string",
+      "requirement": "optional",
+      "default": ".",
+      "description": "proposed directory"
+    },
+    {
+      "key": "outputs",
+      "input_type": "string",
+      "requirement": "optional",
+      "default": ".",
+      "description": "outputs"
+    }
+  ],
+  "extensions": [
+    {
+      "type": "builtin",
+      "name": "developer"
+    }
+  ]
+}

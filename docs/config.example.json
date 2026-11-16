@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "stateDir": "/absolute/private/herdr-codex/state",
+  "hc": "/absolute/private/herdr/bin/hc",
+  "app": "/absolute/private/herdr/bin/herdr-app",
+  "codex": "/absolute/path/to/codex",
+  "node": "/absolute/path/to/node",
+  "profileFile": "/absolute/private/herdr-codex/model-profile.json",
+  "herdrReadPaths": [
+    "/absolute/private/herdr/runtime",
+    "/absolute/private/herdr/config",
+    "/absolute/private/herdr/state"
+  ]
+}
